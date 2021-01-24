@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    string sessionId = (string)ViewData["sessionId"];
+    string userId = (string)ViewData["UserId"];
+    var products = (List<Product>)ViewData["products"];
+}
+
+@section Scripts
+{
+    <script src="~/js/Gallery/GalleryPage.js"></script>
+}
+
+<table>
+    @for (int i = 0; i < products.Count; i += 3)
+    {
+        int j;
+
+        <tr>
+            @for (j = 0; j < 3 && i + j < products.Count; j++)
+            {
+                <td>
+                    <table class="inner-table">
+                        <tr>
+                            <td>
+                                @{
+                                    string url = "/Images/" + products[i + j].ProductLogo;
+                                }
+                                <div class="card-img-top">
+                                    <img src=@url width="175" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="card-title">@products[i + j].ProductName</td>
+                        </tr>
+                        <tr>
+                            <td class="card-text"><small>@products[i + j].Description</small></td>
+                        </tr>
+                        <tr>
+                            <td class="card-title">$ @products[i + j].Price</td>
+                        </tr>
+                        <tr>
+                            @if (products[i + j].NumReviews != 0)
+                            {
+                                <td>
+                                    <!--Code for star rating-->
+                                    @{int k = 1; }
+                                    Rating:@for (; k <= Math.Floor(products[i + j].Rating); k++)
+                                    {
+                                        @: &#10022;
+                                    }
+
+                                    @for (; k <= 5; k++)
+                                    {
+                                        @: &#10023;
+                                    }
+                                    @products[i + j].Rating.ToString("0.0") out of 5
+                                    <br />@products[i + j].NumReviews Customer Reviews
+                                </td>
+                            }
+                            else
+                            {
+                                <td>No customer reviews</td>
+                            }
+                        </tr>
+                        @{
+                            string recId = products[i + j].ProductID + "rec";
+                        }
+
+                        <tr height="20px">
+                            <td>
+                                <input type="Button" value="Add to Cart" class="cartButton" id=@recId />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            }
+        </tr>
+    }
+
+</table>

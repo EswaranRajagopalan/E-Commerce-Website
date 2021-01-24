@@ -1,0 +1,237 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    string sessionId = (string)ViewData["sessionId"];
+    string userId = (string)ViewData["UserId"];
+
+    var popularProducts = (List<Product>)ViewData["popularProducts"];
+    var highRatedProducts = (List<Product>)ViewData["highRatedProducts"];
+    var recommendedProducts = (List<Product>)ViewData["recommendedProducts"];
+}
+
+@section Scripts
+{
+    <script src="~/js/Gallery/GalleryPage.js"></script>
+}
+
+<!--To display recommended products only if the user is logged in-->
+
+@if (userId != null)
+{
+    <h1>Recommended Products</h1>
+    <table>
+
+        @for (int i = 0; i < recommendedProducts.Count; i += 3)
+        {
+            int j;
+
+            <tr>
+                @for (j = 0; j < 3 && i + j < recommendedProducts.Count; j++)
+                {
+                    <td>
+                        <table class="inner-table">
+                            <tr>
+                                <td>
+                                    @{
+                                        string url = "/Images/" + recommendedProducts[i + j].ProductLogo;
+                                    }
+                                    <div class="card-img-top">
+                                        <img src=@url width="175" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="card-title">@recommendedProducts[i + j].ProductName</td>
+                            </tr>
+                            <tr>
+                                <td class="card-text"><small>@recommendedProducts[i + j].Description</small></td>
+                            </tr>
+                            <tr>
+                                <td class="card-title">$ @recommendedProducts[i + j].Price</td>
+                            </tr>
+                            <tr>
+                                @if (recommendedProducts[i + j].NumReviews != 0)
+                                {
+                                    <!--Code for star rating-->
+                                    <td>
+                                        @{int k = 1; }
+                                        Rating:@for (; k <= Math.Floor(recommendedProducts[i + j].Rating); k++)
+                                        {
+                                            @: &#10022;
+                                        }
+
+                                        @for (; k <= 5; k++)
+                                        {
+                                            @: &#10023;
+                                        }
+                                        @recommendedProducts[i + j].Rating.ToString("0.0") out of 5
+                                        <br />@recommendedProducts[i + j].NumReviews Customer Reviews
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>No customer reviews</td>
+                                }
+                            </tr>
+                            @{
+                                string recId = recommendedProducts[i + j].ProductID + "rec";
+                            }
+
+                            <tr height="20px">
+                                <td>
+                                    <input type="Button" value="Add to Cart" class="cartButton" id=@recId />
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                }
+            </tr>
+        }
+    </table>
+}
+<br />
+<br />
+
+<!--To display highly rated products-->
+<h1>Highly Rated Products</h1>
+<hr />
+<table>
+    @for (int i = 0; i < highRatedProducts.Count; i += 3)
+    {
+        int j;
+
+        <tr>
+            @for (j = 0; j < 3 && i + j < highRatedProducts.Count; j++)
+            {
+                <td>
+                    <table class="inner-table">
+                        <tr>
+                            <td>
+                                @{
+                                    string url = "/Images/" + highRatedProducts[i + j].ProductLogo;
+                                }
+                                <div class="card-img-top">
+                                    <img src=@url width="175" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="card-title">@highRatedProducts[i + j].ProductName</td>
+                        </tr>
+                        <tr>
+                            <td class="card-text"><small>@highRatedProducts[i + j].Description</small></td>
+                        </tr>
+                        <tr>
+                            <td class="card-title">$ @highRatedProducts[i + j].Price</td>
+                        </tr>
+                        <tr>
+                            @if (highRatedProducts[i + j].NumReviews != 0)
+                            {
+                                <td>
+                                    <!--Code for star rating-->
+                                    @{int k = 1; }
+                                    Rating:@for (; k <= Math.Floor(highRatedProducts[i + j].Rating); k++)
+                                    {
+                                        @: &#10022;
+                                    }
+
+                                    @for (; k <= 5; k++)
+                                    {
+                                        @: &#10023;
+                                    }
+                                    @highRatedProducts[i + j].Rating.ToString("0.0") out of 5
+                                    <br />@highRatedProducts[i + j].NumReviews Customer Reviews
+                                </td>
+                            }
+                            else
+                            {
+                                <td>No customer reviews</td>
+                            }
+                        </tr>
+                        @{
+                            string hrId = highRatedProducts[i + j].ProductID + "hig";
+                        }
+
+                        <tr height="20px">
+                            <td>
+                                <input type="Button" value="Add to Cart" class="cartButton" id=@hrId />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            }
+        </tr>
+    }
+</table>
+<br />
+<br />
+<h1>Best Selling Products</h1>
+<hr />
+<table>
+    @for (int i = 0; i < popularProducts.Count; i += 3)
+    {
+        int j;
+
+        <tr>
+            @for (j = 0; j < 3 && i + j < popularProducts.Count; j++)
+            {
+                <td>
+                    <table class="inner-table">
+                        <tr>
+                            <td>
+                                @{
+                                    string url = "/Images/" + popularProducts[i + j].ProductLogo;
+                                }
+                                <div class="card-img-top">
+                                    <img src=@url width="175" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="card-title">@popularProducts[i + j].ProductName</td>
+                        </tr>
+                        <tr>
+                            <td class="card-text"><small>@popularProducts[i + j].Description</small></td>
+                        </tr>
+                        <tr>
+                            <td class="card-title">$ @popularProducts[i + j].Price </td>
+                        </tr>
+                        <tr>
+                            @if (popularProducts[i + j].NumReviews != 0)
+                            {
+                                <td>
+                                    <!--Code for star rating-->
+                                    @{int k = 1; }
+                                    Rating:@for (; k <= Math.Floor(popularProducts[i + j].Rating); k++)
+                                    {
+                                        @: &#10022;
+                                    }
+
+                                    @for (; k <= 5; k++)
+                                    {
+                                        @: &#10023;
+                                    }
+                                    @popularProducts[i + j].Rating.ToString("0.0") out of 5
+                                    <br />@popularProducts[i + j].NumReviews Customer Reviews
+                                </td>
+                            }
+                            else
+                            {
+                                <td>No customer reviews</td>
+                            }
+                        </tr>
+                        @{
+                            string popId = popularProducts[i + j].ProductID + "pop";
+                        }
+
+                        <tr height="20px">
+                            <td>
+                                <input type="Button" value="Add to Cart" class="cartButton" id=@popId />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            }
+        </tr>
+    }
+</table>

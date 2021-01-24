@@ -1,0 +1,65 @@
+﻿
+@{
+    List<ProductInCart> products = (List<ProductInCart>)ViewData["product"];
+    double total = (double)ViewData["total"];
+    Layout = "~/Views/Shared/_CartPurchView.cshtml";
+}
+
+<table cellspacing="1">
+    <tr>
+        <td>@Html.ActionLink("< Back to Cart", "Index", "Cart")</td>
+        <td colspan="3"></td>
+        <td><input type="button" value="Confirm Payment" onclick="OK()" class="btn btn-success"></td>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td><h5 class="card-title">Product</h5></td>
+        <td><h5 class="card-title">Unit Price</h5></td>
+        <td><h5 class="card-title">Quantity</h5></td>
+        <td><h5 class="card-title">Subtotal</h5></td>
+    </tr>
+
+    @foreach (ProductInCart P in products)
+    {
+        <tr>
+            <td></td>
+            <td align="center" class="past-purchase-card">
+                <div class="card">
+                    @{
+                        string url = "/images/" + P.ProductLogo;
+
+                    }
+                    <img src=@url class="card-img-top" alt="Image of @P.ProductName">
+                    <h5 class="card-title">@P.ProductID  @P.ProductName </h5>
+                    <p class="card-text">@P.Description</p>
+
+                </div>
+            </td>
+            <td><big> $@P.Price</big></td>
+            <td><big>@P.Quantity</big></td>
+            <td><big>$ @(P.Price*Convert.ToDouble(P.Quantity))</big></td>
+        </tr>
+        <tr>
+            <td colspan="5"></td>
+        </tr>
+    }
+    <tr>
+        <td colspan="5"></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td><h6 class="card-title">Total:</h6></td>
+        <td></td>
+        <td><h6 class="card-title">$ @total</h6></td>
+    </tr>
+</table>
+
+
+
+
+
+
+
+

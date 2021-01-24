@@ -1,0 +1,152 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a {
+    color: darkorange;
+}
+
+b {
+    line-height: 3;
+    padding: 20px;
+}
+
+hr {
+    color: dimgrey;
+}
+
+table {
+    align-content: center;
+    margin: auto;
+    width: 80%;
+}
+
+
+tr {
+    text-align: center;
+}
+
+th, td {
+    padding: 20px;
+    width: 250px;
+}
+
+
+th {
+    /*border: 1px solid black;*/
+    border-collapse: collapse;
+    height: 75px;
+    text-align: center;
+}
+
+.inner-table {
+    border: 1px solid grey;
+    width: 500px;
+    height: 800px;
+}
+
+.authentication {
+    width: 750px;
+    height: 250px;
+}
+
+.card {
+    padding-top: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
+    text-align: center;
+}
+
+.card-img-top {
+    padding: 20px;
+}
+
+.form-control {
+    width: 500px;
+}
+
+.container-body {
+    padding: 20px;
+}
+
+.navbar {
+    border-radius: 0;
+}
+
+    .navbar navbar-light bg-light {
+        margin-bottom: 50px;
+        padding-bottom: 50px;
+        background-color: rgb(8, 36, 107);
+    }
+
+.card-title {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.nav navbar-nav {
+    display: inline-block;
+    height: 50px;
+}
+
+.past-purchases {
+    width: 1500px;
+}
+
+.past-purchase-info {
+    width: 500px;
+    padding: 20px;
+    align-content: center;
+}
+
+.past-purchase-card {
+    border: 1px solid grey;
+    width: 400px;
+    height: 450px;
+}
+
+.menu-cell {
+    height: 50px;
+    width: 130px;
+    padding: 20px;
+    display: block;
+}
+
+    .menu-cell:hover {
+        background-color: rgb(234, 234, 234);
+        cursor: pointer;
+    }
+
+input[type=number]::-webkit-inner-spin-button {
+    opacity: 1
+}
+
+.activationCode {
+    width: 400px;
+    margin-left: 125px;
+}
+
+.quantity-field {
+    width: 50px;
+}
+
+.btn-success {
+    font-size: 20px;
+    width: 200px;
+    height: 50px;
+}
+
+#menu {
+    border: 0px;
+    float: left;
+    width: 300px;
+}
+
+#err_msg {
+    color: red;
+    font-weight: bold;
+    padding: 10px;
+}
+
+#username, #password, #submitBtn {
+    margin: 5px;
+}

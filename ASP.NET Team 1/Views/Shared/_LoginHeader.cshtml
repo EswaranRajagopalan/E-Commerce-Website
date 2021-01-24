@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/shoppingCart.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a asp-area="" asp-controller="Gallery" asp-action="Index"><img src="~/images/Star Marketplace logo.png" alt="StarMarketplace" style="height:150px;" class="rounded float-left"></a>
+
+        </div>
+ 
+        <hr />
+        @*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+
+            </nav>*@
+    </header>
+
+    <div class="container-body">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <hr/>
+        <table width="100%" height="300px" style="text-align:left;">
+            <tr>
+                <th>
+                    Customer Service
+                </th>
+                <th>
+                    About Star MarketPlace
+                </th>
+                <th>
+                    Follow us
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <a href="">Help Centre</a>
+                </td>
+                <td>
+                    <a href="">About us</a>
+                </td>
+                <td>
+                    <a href="">Facebook</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="">Our Products</a>
+                </td>
+                <td>
+                    <a href="">Careers</a>
+                </td>
+                <td>
+                    <a href="">Instagram</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="">Contact us</a>
+                </td>
+                <td>
+                    <a href="">Privacy Policy</a>
+                </td>
+                <td>
+                    <a href="">LinkedIn</a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">&copy; 2020 Star MarketPlace - All rights reserved</td>
+            </tr>
+        </table>
+
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

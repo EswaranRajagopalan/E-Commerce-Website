@@ -1,0 +1,43 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+    Layout = "~/Views/Shared/_LoginHeader.cshtml";
+
+    ViewData["Title"] = "Login Page";
+
+    string source =(string) ViewData["Source"];
+
+    string error = (string) ViewData["errMsg"];
+    string action = "/Login/Authentication?source=" + source;
+}
+
+@section Scripts
+{
+    <script src="~/js/login.js"></script>
+}
+
+<form id="form" action="@action" method="POST">
+    <table align="center" class="authentication">
+        <tr>
+            <td>Username:</td>
+            <td><input id="userId" name="userId" class="form-control" value="@ViewData["username"]" size="30"/></td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td><input id="password" name="password" type="password" class="form-control" size="30"/></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="right">
+                <input id="submitBtn" type="submit"  class="btn btn-success"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center" style="font-weight:bold;color:red">
+                <span id="err_msg">@error</span>
+            </td>
+        </tr>
+    </table>
+    
+</form>

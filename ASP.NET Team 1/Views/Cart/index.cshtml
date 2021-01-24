@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewData["title"] = "User ";
+    List<ProductInCart> cart = (List<ProductInCart>)ViewData["Cart"];
+    double Sum = (double)ViewData["Sum"];
+    int Count = (int)ViewData["TotalItems"];
+
+    Layout = "~/Views/Shared/_CartPurchView.cshtml";
+}
+
+@section Scripts {
+    <script src="~/js/Cart/Cart.js"></script>
+}
+
+<form action="Cart/Index" id="cart_from" method="post">
+    <table>
+        <tr height="100">
+            <td>
+                @Html.ActionLink("< Continue Shopping", "Index", "Gallery")
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <th border=" 1 pt"><input type="button" value="Checkout" onclick="checkout()" class="btn btn-success" /><br><h6 class="card-title">Total Sum: <br>$ @Sum</h6></th>
+        </tr>
+        @foreach (ProductInCart P in cart)
+        {
+            <tr>
+                <td></td>
+                <td align="center" class="past-purchase-card">
+                    <div class="card">
+                        @{
+                            string url = "/Images/" + P.ProductLogo;
+
+                        }
+                        <img src=@url class="card-img-top" alt="Image of @P.ProductName">
+                        <h5 class="card-title">@P.ProductID @P.ProductName </h5>
+                        <p class="card-text">@P.Description</p>
+                    </div>
+                </td>
+                <td>
+                    <b>Price: </b>$ @P.Price <br>
+                    <b>Quantity: </b><input type="number" product_id="@P.ProductID" step="1" max="" min="0" value="@P.Quantity" name="quantity" class="quantity-field" action="/Cart/EditProductQuantity" formmethod="Post">
+                </td>
+                <td><input type="button" value="Delete" product_id="@P.ProductID" class="btn btn-danger" action="/Cart/RemoveFromCart" formmethod="delete" /></td>
+            </tr>
+            <tr>
+                <td colspan="5"></td>
+            </tr>
+        }
+    </table>
+</form>
+

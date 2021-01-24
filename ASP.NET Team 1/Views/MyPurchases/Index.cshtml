@@ -1,0 +1,223 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@section Scripts
+{
+    <script src="~/js/Purchase.js"></script>
+    <script>
+        /*
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+*/
+    </script>
+}
+
+@{
+    Layout = "~/Views/Shared/_CartPurchView.cshtml";
+
+    List<Purchase> purchases = (List<Purchase>)ViewData["Purchases"];
+
+    List<Purchase> uniqueItems = new List<Purchase>();
+
+    bool flag = false;
+
+    for (int i = 0; i < purchases.Count; i++)
+    {
+        flag = false;
+
+        if (uniqueItems.Count == 0)
+        {
+            uniqueItems.Add(purchases[i]);
+        }
+        for (int j = 0; j < uniqueItems.Count; j++)
+        {
+
+            if (purchases[i].productID == uniqueItems[j].productID)
+            {
+                flag = true;
+                break;
+            }
+        }
+
+        if (flag == false)
+        {
+            uniqueItems.Add(purchases[i]);
+        }
+    }
+
+}
+<style>
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+</style>
+
+<table class="past-purchases">
+    <tr>
+        <th>
+            <br>
+            <!--Check with Esh if this needs to update to route to the correct controller-->
+            @Html.ActionLink("< Continue Shopping", "Index", "Gallery")
+        </th>
+        <td>
+            <h2>Product Details</h2>
+        </td>
+        <td>
+            <h2>Order Details</h2>
+        </td>
+    </tr>
+
+    @for (int i = 0; i < uniqueItems.Count; i++)
+    {
+        <tr>
+            <td>
+            </td>
+            <td class="past-purchase-card">
+                <div class="card">
+                    @{
+                        string url = "/images/" + uniqueItems[i].image.TrimEnd();
+                    }
+                    <img src=@url class="card-img-top" alt="Image of @uniqueItems[i].productName"><br />
+                    <p class="card-title">@uniqueItems[i].productID @uniqueItems[i].productName </p><br />
+                    <p class="card-text">@uniqueItems[i].productDesc</p>
+                </div>
+            </td>
+            <td class="past-purchase-info">
+                @{
+                    var iter = from purchase in purchases
+                               where purchase.productID == uniqueItems[i].productID
+                               orderby purchase.datePurchased descending
+                               select purchase.datePurchased;
+
+                    int counter = purchases.Count(x => x.productID == uniqueItems[i].productID);
+
+                    var date = "";
+
+                    foreach (var k in iter)
+                    {
+                        if (counter > 1 && date != "")
+                        {
+
+                        }
+                        else
+                        {
+                            date += k;
+                        }
+                    }
+                }
+
+                <p class="card-title">Latest Purchase: </p>
+                <p><big>@date</big></p>
+
+                <p class="card-title">Quantity purchased: </p>
+                <p><big>@counter</big></p>
+
+                <br />
+                <p class="card-title">Activation Code: </p>
+                <br />
+                @{
+                    if (counter > 1)
+                    {
+                        <select id="activationCodes_@i" class="form-control activationCode">
+                            @for (int j = 0; j < purchases.Count; j++)
+                            {
+                                @if (purchases[j].productID == uniqueItems[i].productID)
+                                {
+                                    <option value="@purchases[j].activationCode">@purchases[j].activationCode</option>
+                                }
+                            }
+                        </select>
+
+                    }
+                    else
+                    {
+                        @for (int j = 0; j < purchases.Count; j++)
+                        {
+                            @if (purchases[j].productID == uniqueItems[i].productID)
+                            {
+                                <p><big>@purchases[j].activationCode</big></p>
+                            }
+                        }
+                    }
+                }
+                @{
+                    string rateButtonId = uniqueItems[i].productID + "bid";
+                    string divId = uniqueItems[i].productID + "did";
+                    string spanId = uniqueItems[i].productID + "sid";
+                    string radioButtonName = uniqueItems[i].productID + "rid";
+                }
+                <br />
+                <br />
+                <p><input type="button" value="Rate Product" class="RateBtn" id=@rateButtonId /></p>
+                <div id=@divId class="modal">
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <span id="@spanId" class="close">&times;</span>
+                        <p>Select the product rating</p>
+                        1 <input type="radio" name=@radioButtonName onchange="handleChange(this)" value="1" />
+                        <br />
+                        2 <input type="radio" name=@radioButtonName onchange="handleChange(this)" value="2" />
+                        <br />
+                        3 <input type="radio" name=@radioButtonName onchange="handleChange(this)" value="3" />
+                        <br />
+                        4 <input type="radio" name=@radioButtonName onchange="handleChange(this)" value="4" />
+                        <br />
+                        5 <input type="radio" name=@radioButtonName onchange="handleChange(this)"  value="5" />
+                    </div>
+                </div>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="3" height="20"></td>
+        </tr>
+                    }
+
+</table>
+<input type="hidden" id="ratingValue" value="0" />
+
